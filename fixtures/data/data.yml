@@ -1,0 +1,5 @@
+User:
+ user{1..10}:
+   name: "{{name.firstName}} {{name.lastName}}"
+   email: "{{internet.email}}"
+   password: "{{internet.password}}"
