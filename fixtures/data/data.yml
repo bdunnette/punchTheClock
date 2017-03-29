@@ -1,5 +1,10 @@
-User:
- user{1..10}:
-   name: "{{name.firstName}} {{name.lastName}}"
+Person:
+ person_{1..10}:
+   name: "{{name.findName}}"
    email: "{{internet.email}}"
-   password: "{{internet.password}}"
+
+Attendance:
+  attendance_{1..100}:
+    startDate: "{{date.past}}"
+    endDate: "{{date.past}}"
+    personId: @person.*
