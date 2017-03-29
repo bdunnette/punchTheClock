@@ -43,5 +43,13 @@
   "Role": {
     "dataSource": "db",
     "public": false
+  },
+  "Person": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Attendance": {
+    "dataSource": "db",
+    "public": true
   }
 }
