@@ -43,9 +43,38 @@ function ConfigBlock($stateProvider, $urlRouterProvider) {
     template: '<ui-view></ui-view>'
   };
 
+  var VolunteerViewState ={
+    name: 'volunteerView',
+    url: '/volunteer/:volunteerId',
+    templateUrl: 'views/volunteerView.html',
+    controller: VolunteerController
+  }
+
   $stateProvider.state('home', HomeState);
+  $stateProvider.state('volunteerView', VolunteerViewState);
   $urlRouterProvider.otherwise('/');
 }
+
+function VolunteerController($stateParams, $state, $scope, Person) {
+  logMilestone("Volunteer Controller");
+  var ctrl = this;
+  console.log($stateParams);
+  Person.findOne({
+    filter: {
+      where: {
+        id: $stateParams.volunteerId
+      },
+      include: ['attendances']
+    }
+  }, function(volunteer) {
+    $scope.volunteer = volunteer;
+    console.log($scope.volunteer);
+  }, function(error) {
+    console.error(error);
+  });
+
+}
+
 
 function NavbarController($stateParams, $state, $cookies, LoopBackAuth, User) {
   logMilestone("Navbar Controller");
@@ -57,10 +86,6 @@ function NavbarController($stateParams, $state, $cookies, LoopBackAuth, User) {
   LoopBackAuth.save();
   console.log(LoopBackAuth);
   console.log(User.isAuthenticated());
-  User.getCurrent().$promise.then(function(user) {
-    console.log('Got user data: ' + JSON.stringify(user));
-    ctrl.user = user;
-  });
 
   ctrl.logMeOut = function() {
     console.log(LoopBackAuth);

@@ -11,30 +11,32 @@
 </head>
 
 <body ng-app="punchTheClock">
-  <div class="container">
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="NavbarController">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" ui-sref="home">punchTheClock</a>
-        </div>
-        <div>
-          <ul class="nav navbar-nav">
-            <li>
-              <a ui-sref="home">Home</a>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li >
-              <a href="/auth/github"><i class="fa fa-github-alt" aria-hidden="true"></i> Login with Github</a>
-            </li>
-          </ul>
-        </div>
+  <div class="navbar navbar-inverse" role="navigation" ng-controller="NavbarController">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" ui-sref="home">punchTheClock</a>
+      </div>
+      <div>
+        <ul class="nav navbar-nav">
+          <li>
+            <a ui-sref="home">Home</a>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a href="/auth/github"><i class="fa fa-github-alt" aria-hidden="true"></i> Login with Github</a>
+          </li>
+        </ul>
       </div>
     </div>
-    <ol class="breadcrumb">
-      <li><a href="#">Home</a></li>
-    </ol>
-    <div ui-view></div>
+  </div>
+  <div class="container-fluid" ui-view></div>
+  <div class="footer">
+    <div class="container">
+      <p class="pull-right">
+        &copy; 2017 Free Geek Twin Cities
+      </p>
+    </div>
   </div>
   <!-- bower:js -->
   <script src="vendor/angular/angular.js"></script>
@@ -47,6 +49,9 @@
   <script src="vendor/angular-animate/angular-animate.js"></script>
   <script src="vendor/angular-sanitize/angular-sanitize.js"></script>
   <script src="vendor/angular-cookies/angular-cookies.js"></script>
+  <script src="vendor/angular-live-set/dist/live-set.js"></script>
+  <script src="vendor/moment/moment.js"></script>
+  <script src="vendor/angular-moment/angular-moment.js"></script>
   <!-- endbower -->
   <script src="js/lb-services.js"></script>
   <script src="js/app.js"></script>

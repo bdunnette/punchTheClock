@@ -29,6 +29,8 @@
     "angular-touch": "^1.6.3",
     "angular-animate": "^1.6.3",
     "angular-sanitize": "^1.6.3",
-    "angular-cookies": "^1.6.3"
+    "angular-cookies": "^1.6.3",
+    "angular-live-set": "*",
+    "angular-moment": "^1.0.1"
   }
 }
