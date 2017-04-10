@@ -43,7 +43,14 @@ function ConfigBlock($stateProvider, $urlRouterProvider) {
     template: '<ui-view></ui-view>'
   };
 
-  var VolunteerViewState ={
+  var VolunteerListState = {
+    name: 'volunteerList',
+    url: '/volunteer/',
+    templateUrl: 'views/volunteerList.html',
+    controller: VolunteerListController
+  }
+
+  var VolunteerViewState = {
     name: 'volunteerView',
     url: '/volunteer/:volunteerId',
     templateUrl: 'views/volunteerView.html',
@@ -51,8 +58,20 @@ function ConfigBlock($stateProvider, $urlRouterProvider) {
   }
 
   $stateProvider.state('home', HomeState);
+  $stateProvider.state('volunteerList', VolunteerListState);
   $stateProvider.state('volunteerView', VolunteerViewState);
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/volunteer/');
+}
+
+function VolunteerListController($stateParams, $state, $scope, Person) {
+  logMilestone("Volunteer List Controller");
+  var ctrl = this;
+  Person.find({}, function(volunteers) {
+    $scope.volunteers = volunteers;
+    console.log($scope.volunteers);
+  }, function(error) {
+    console.error(error);
+  });
 }
 
 function VolunteerController($stateParams, $state, $scope, Person) {
@@ -74,7 +93,6 @@ function VolunteerController($stateParams, $state, $scope, Person) {
   });
 
 }
-
 
 function NavbarController($stateParams, $state, $cookies, LoopBackAuth, User) {
   logMilestone("Navbar Controller");

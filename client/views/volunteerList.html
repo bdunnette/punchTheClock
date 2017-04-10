@@ -1,0 +1,4 @@
+<h2>{{volunteer.name}}</h2>
+<ul class="list-group">
+  <li ui-sref="volunteerView({volunteerId:volunteer.id})" class="list-group-item" ng-repeat="volunteer in volunteers">{{volunteer|json}}</li>
+</ul>
