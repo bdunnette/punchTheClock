@@ -12,5 +12,5 @@ module.exports = function(app) {
   });
   passportConfigurator.configureProvider('github-login',
     require('../../providers.json')['github-login']);
-  console.log(passportConfigurator);
+  // console.log(passportConfigurator);
 };

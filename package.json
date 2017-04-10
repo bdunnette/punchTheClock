@@ -5,11 +5,13 @@
   "scripts": {
     "lint": "eslint .",
     "start": "node .",
+    "test": "./node_modules/loopback-testing/node_modules/.bin/mocha",
     "posttest": "npm run lint && nsp check"
   },
   "dependencies": {
     "compression": "^1.0.3",
     "cors": "^2.5.2",
+    "event-stream": "^3.3.4",
     "helmet": "^1.3.0",
     "loopback": "^3.0.0",
     "loopback-boot": "^2.6.5",
@@ -31,6 +33,7 @@
     "gulp-nodemon": "^2.2.1",
     "gulp-rename": "^1.2.2",
     "loopback-sdk-angular": "^3.1.0",
+    "loopback-testing": "^1.4.0",
     "nsp": "^2.1.0",
     "wiredep": "^4.0.0"
   },

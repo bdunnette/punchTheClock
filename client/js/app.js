@@ -6,7 +6,9 @@ var app = angular.module('punchTheClock', [
   'ui.router',
   'ui.bootstrap',
   'ngCookies',
-  'lbServices'
+  'lbServices',
+  'ls.LiveSet',
+  'ls.ChangeStream'
 ]);
 
 app.run(RunBlock);
@@ -63,7 +65,7 @@ function ConfigBlock($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/volunteer/');
 }
 
-function VolunteerListController($stateParams, $state, $scope, Person) {
+function VolunteerListController($scope, Person) {
   logMilestone("Volunteer List Controller");
   var ctrl = this;
   Person.find({}, function(volunteers) {
@@ -74,24 +76,37 @@ function VolunteerListController($stateParams, $state, $scope, Person) {
   });
 }
 
-function VolunteerController($stateParams, $state, $scope, Person) {
+function VolunteerController($stateParams, $scope, Person, Attendance, createChangeStream, LiveSet) {
   logMilestone("Volunteer Controller");
   var ctrl = this;
   console.log($stateParams);
-  Person.findOne({
-    filter: {
-      where: {
-        id: $stateParams.volunteerId
-      },
-      include: ['attendances']
-    }
+  var changes = createChangeStream();
+  var set;
+
+  Person.findById({
+    id: $stateParams.volunteerId
   }, function(volunteer) {
     $scope.volunteer = volunteer;
     console.log($scope.volunteer);
+
   }, function(error) {
     console.error(error);
   });
 
+  Attendance.find({
+    filter: {
+      where: {
+        personId: $stateParams.volunteerId
+      }
+    }
+  }).$promise.then(function(attendances) {
+    var src = new EventSource('/api/Attendances/change-stream');
+    var changes = createChangeStream(src);
+    set = new LiveSet(attendances, changes);
+    console.log(set);
+    $scope.attendances = set.toLiveArray();
+    console.log($scope.attendances);
+  });
 }
 
 function NavbarController($stateParams, $state, $cookies, LoopBackAuth, User) {

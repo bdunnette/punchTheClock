@@ -1,4 +1,7 @@
-<h2>{{volunteer.name}}</h2>
-<ul class="list-group">
-  <li class="list-group-item" ng-repeat="attendance in volunteer.attendances|orderBy:'-startDate'">{{attendance.startDate|date:'short'}}{{attendance|json}}</li>
-</ul>
+<div class="row-fluid">
+  <h2>{{volunteer.name}}</h2>
+  <h3>Total Attendances: {{attendances.length}}</h3>
+  <ul class="list-group">
+    <li class="list-group-item row-fluid" ng-repeat="attendance in attendances|orderBy:'-startDate'">{{attendance.startDate|date:'short'}}{{attendance|json}}</li>
+  </ul>
+</div>
