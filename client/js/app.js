@@ -4,7 +4,7 @@ function logMilestone(message) {
 
 var app = angular.module('punchTheClock', [
   'ui.router',
-  'ui.bootstrap',
+  'ngMaterial',
   'ngCookies',
   'lbServices',
   'ls.LiveSet',

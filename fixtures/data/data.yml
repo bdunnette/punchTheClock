@@ -2,6 +2,7 @@ Person:
  person_{1..10}:
    name: "{{name.findName}}"
    email: "{{internet.email}}"
+   photo: "{{image.avatar}}"
 
 Attendance:
   attendance_{1..100}:

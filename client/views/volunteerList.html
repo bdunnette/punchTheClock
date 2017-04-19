@@ -1,4 +1,10 @@
-<h2>{{volunteer.name}}</h2>
-<ul class="list-group">
-  <li ui-sref="volunteerView({volunteerId:volunteer.id})" class="list-group-item" ng-repeat="volunteer in volunteers">{{volunteer|json}}</li>
-</ul>
+<md-list flex>
+  <md-list-item class="md-2-line" ng-class="{'md-offset': !volunteer.photo}" ui-sref="volunteerView({volunteerId:volunteer.id})" ng-repeat="volunteer in volunteers" ng-click="null">
+    <img ng-if="volunteer.photo" ng-src="{{volunteer.photo}}?{{$index}}" class="md-avatar" alt="{{volunteer.name}}" />
+    <md-icon md-font-icon="android" aria-label="android"></md-icon>
+    <div class="md-list-item-text" layout="column">
+      <h3>{{volunteer.name}}</h3>
+      <p>{{volunteer|json}}</p>
+    </div>
+  </md-list-item>
+</md-list>
