@@ -1,5 +1,7 @@
 'use strict';
 
+var moment = require('moment');
+
 module.exports = function(Person) {
   var app = require('../../server/server');
   var Attendance = app.models.Attendance;
@@ -7,10 +9,26 @@ module.exports = function(Person) {
   Person.signIn = function(personId, cb) {
     Person.findById(personId)
       .then(function(person) {
-        person.attendances.create({}, function(err, attendance) {
-          console.error(err);
-          console.log(attendance);
-          return cb(null, attendance);
+        // Look for open attendance (i.e. one with no end date) for the volunteer
+        person.attendances.findOne({
+          where: {
+            endDate: null
+          },
+          order: 'startDate DESC'
+        }).then(function(attendance) {
+          // If open attendance is found, just return that
+          if (attendance) {
+            return cb(null, attendance);
+          } else {
+            // Otherwise, create new attendance
+            person.attendances.create({}).then(function(attendance) {
+              console.log(attendance);
+              return cb(null, attendance);
+            })
+          }
+        }).catch(function(err) {
+          console.log(err);
+          return cb(err, null);
         });
       })
       .catch(function(err) {
@@ -23,16 +41,26 @@ module.exports = function(Person) {
   Person.signOut = function(personId, cb) {
     Person.findById(personId)
       .then(function(person) {
-        person.attendances.findOne({where:{endDate:null}, order:'startDate DESC'}, function(err, attendance) {
-          console.error(err);
-          console.log(attendance);
+        // Look for open attendance (i.e. one with no end date) for the volunteer
+        person.attendances.findOne({
+          where: {
+            endDate: null
+          },
+          order: 'startDate DESC'
+        }).then(function(attendance) {
+          // If open attendance is found, set its end date to now
           var endDate = new Date();
-          console.log(endDate);
-          attendance.updateAttribute('endDate', endDate, function(err, attendance){
-            console.error(err);
-            console.log(attendance);
+          // Calculate difference (in milliseconds!) between start & end dates
+          var duration = moment(endDate).diff(attendance.startDate);
+          attendance.updateAttributes({
+            'endDate': endDate,
+            'duration': duration
+          }, function(err, attendance) {
+            return cb(err, attendance);
           })
-          return cb(null, attendance);
+        }).catch(function(err) {
+          var error = new Error("Unable to find open attendance for volunteer ID " + personId);
+          return cb(error, null);
         });
       })
       .catch(function(err) {

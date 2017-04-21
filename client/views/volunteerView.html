@@ -1,7 +1,16 @@
-<div class="row-fluid">
-  <h2>{{volunteer.name}}</h2>
-  <h3>Total Attendances: {{attendances.length}}</h3>
-  <ul class="list-group">
-    <li class="list-group-item row-fluid" ng-repeat="attendance in attendances|orderBy:'-startDate'">{{attendance.startDate|date:'short'}}{{attendance|json}}</li>
-  </ul>
+<div class="container-fluid">
+  <div class="container-fluid volunteer-header">
+    <img ng-if="volunteer.photo" ng-src="{{volunteer.photo}}" alt="{{volunteer.name}}" class="img-circle img-responsive pull-left">
+    <h2>{{volunteer.name}}</h2>
+  </div>
+  <div class="container-fluid volunteer-attendances">
+    <h3>Total Attendances: {{attendances.length}}</h3>
+    <ul class="list-group">
+      <li class="list-group-item row-fluid" ng-repeat="attendance in attendances|orderBy:'-startDate'">{{attendance.startDate|date:'short'}}{{attendance|json}}</li>
+    </ul>
+  </div>
+
+  <p>
+    {{volunteer|json}}
+  </p>
 </div>
